@@ -6,7 +6,7 @@ homepage   : \https://github.com/dizzib/leanconf
 bugs       : \https://github.com/dizzib/leanconf/issues
 license:   : \MIT
 author     : \dizzib
-bin        : \./bin/leanconf
+main       : \./leanconf.js
 repository :
   type: \git
   url : \https://github.com/dizzib/leanconf
