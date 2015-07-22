@@ -31,7 +31,7 @@ Indented whitespace controls nesting and values are parsed to strings.
 [node.js] code:
 
 ```javascript
-var conf = require('fs').readFileSync('shop.conf', {encoding:'utf8'});
+var conf = require('fs').readFileSync('shop.conf'});
 var obj = require('leanconf').parse(conf);
 console.log(require('util').inspect(obj, {depth:null}));
 ```
