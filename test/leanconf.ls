@@ -1,5 +1,5 @@
 A = require \chai .assert
-T = require \../lib/lm-parse
+T = require \../lib/leanconf .parse
 
 const ARRAY = as-array:true
 deq = A.deepEqual

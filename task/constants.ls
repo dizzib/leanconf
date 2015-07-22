@@ -21,7 +21,7 @@ dir =
   TEST : "#root/#{DIRNAME.TEST}"
 
 module.exports =
-  APPNAME: \lm-parse
+  APPNAME: \leanconf
   dirname: DIRNAME
   dir    : dir
 
