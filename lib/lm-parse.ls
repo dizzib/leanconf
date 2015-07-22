@@ -1,7 +1,7 @@
 module.exports = (conf, opts) ->
   throw new Error 'conf must be a string' unless typeof conf is \string
-  const DEFAULT-OPTS = as-array:false comment:\#
-  parse 0, conf / '\n', DEFAULT-OPTS with opts
+  opts = (defaults = as-array:false comment:\#) with opts
+  parse 0, conf / '\n', opts <<< rx:comment:new RegExp "^([^#{opts.comment}]*)"
 
 function parse offset, lines, opts
   return void unless lines.length
@@ -18,7 +18,7 @@ function parse offset, lines, opts
       err \string v if typeof res is \string
       res := v
   function get-indent line then /^(\s*)/.exec line .0.length
-  function strip-comment line then /^([^#]*)/.exec line .0
+  function strip-comment line then opts.rx.comment.exec line .0
   function err what, x then throw new Error "Unexpected #what at line #{1 + i + offset}: #x"
 
   while i < lines.length
