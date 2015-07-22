@@ -15,10 +15,11 @@ describe 'error' ->
   test 'bad string'  -> run 'a:\n b\n c' 'Unexpected string at line 3: c'
 
 describe 'empty' ->
-  test 'hash 1'  -> run '' {}
-  test 'hash 2'  -> run '\n\n' {}
-  test 'array 1' -> run '' [] ARRAY
-  test 'array 2' -> run '\n\n' [] ARRAY
+  test '{} 1' -> run '' {}
+  test '{} 2' -> run '\n\n' {}
+  test '[] 1' -> run '' [] ARRAY
+  test '[] 2' -> run '\n\n' [] ARRAY
+  test 'void' -> run 'a:\nb : ' a:void b:void
 
 describe 'flat' ->
   test 'single' -> run 'foo' 'foo'

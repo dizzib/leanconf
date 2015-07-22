@@ -1,42 +1,32 @@
 module.exports = (conf, opts) ->
   throw new Error 'conf must be a string' unless typeof conf is \string
   opts = (defaults = as-array:false comment:\#) with opts
-  parse 0, conf / '\n', opts <<< rx:comment:new RegExp "^([^#{opts.comment}]*)"
+  parse 1, conf / '\n', opts <<< rx:comment:new RegExp "^([^#{opts.comment}]*)"
 
 function parse offset, lines, opts
   return void unless lines.length
-  res = if opts.as-array then [] else {}
-  i = 0
+  i = -1; res = if opts.as-array then [] else {}
 
   function append v, k
-    if opts.as-array
-      return res.push "#k":v if k?length
-      res.push v if v?length
-    else
-      return res[k] = v if k?length
-      return unless v?length
-      err \string v if typeof res is \string
-      res := v
+    if opts.as-array and k?length then return res.push "#k":v
+    if opts.as-array then return if v?length then res.push v
+    if k?length then return res[k] = v else return unless v?length
+    if typeof res is \string then err \string v else res := v
   function get-indent line then /^(\s*)/.exec line .0.length
   function strip-comment line then opts.rx.comment.exec line .0
-  function err what, x then throw new Error "Unexpected #what at line #{1 + i + offset}: #x"
+  function err what, x then throw new Error "Unexpected #what at line #{i + offset}: #x"
 
-  while i < lines.length
+  while ++i < lines.length
     err \indent li unless 0 is get-indent li = strip-comment lines[i]
     is-sep = (sepidx = li.indexOf \:) > -1
     is-subconf = get-indent lines[1 + i]
     k = (if is-sep then li.substr 0 sepidx else if is-subconf then li else '').trim!
     v = (if is-sep then li.substr 1 + sepidx else if is-subconf then '' else li).trim!
-    #console.log "k='#k' sepidx=#sepidx v='#v'"
-    if v.length
-      append v, k
-      i++
-      continue
-    sublines = []
-    suboffset = offset + ++i
-    while i < lines.length and get-indent li = lines[i]
-      err \outdent li if li.substr 0 (subind ?= get-indent li) .trim!length
-      sublines.push li.substr subind
-      i++
-    append (parse suboffset, sublines, opts with as-array:not is-sep), k
+    if v.length then append v, k else
+      sublines = []; suboffset = offset + i + 1
+      while i++ < lines.length and get-indent li = lines[i]
+        err \outdent li if li.substr 0 (subind ?= get-indent li) .trim!length
+        sublines.push li.substr subind
+      append (parse suboffset, sublines, opts with as-array:not is-sep), k
+      i--
   res
