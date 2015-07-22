@@ -1,5 +1,6 @@
 module.exports = parse: (conf, opts) ->
-  throw new Error 'conf must be a string' unless typeof conf is \string
+  conf = conf.toString! if conf instanceof Buffer
+  throw new Error 'conf must be a string or buffer' unless typeof conf is \string
   opts = (defaults = as-array:false comment:\#) with opts
   parse 1, conf / '\n', opts <<< rx:comment:new RegExp "^([^#{opts.comment}]*)"
 
