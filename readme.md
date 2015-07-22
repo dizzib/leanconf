@@ -1,4 +1,5 @@
 # leanconf
+[![Build Status](https://travis-ci.org/dizzib/leanconf.svg?branch=master)](https://travis-ci.org/dizzib/leanconf)
 
 Specify configuration using just 2 markup characters:
 
@@ -37,13 +38,14 @@ console.log(require('util').inspect(obj, {depth:null}));
 
 output:
 
-    { name: 'dizzib\'s corner shop',
-      patrons: { alice: { cash: '5.00' }, bob: { credit: '10.00' } },
-      fruits:
-       [ { apples: [ 'Braeburn', 'Cox\'s', 'Royal Gala' ] },
-         'banana',
-         { orange: { price: '0.10' } } ] }
-
+```javascript
+{ name: 'dizzib\'s corner shop',
+  patrons: { alice: { cash: '5.00' }, bob: { credit: '10.00' } },
+  fruits:
+   [ { apples: [ 'Braeburn', 'Cox\'s', 'Royal Gala' ] },
+     'banana',
+     { orange: { price: '0.10' } } ] }
+```
 
 # methods
 
