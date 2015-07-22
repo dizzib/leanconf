@@ -1,16 +1,25 @@
 {
-  "name": "lm-parse",
+  "name": "leanconf",
   "version": "0.1.0",
-  "description": "",
-  "keywords": [],
-  "homepage": "https://github.com/dizzib/lm-parse",
-  "bugs": "https://github.com/dizzib/lm-parse/issues",
+  "description": "Specify configuration using just 2 markup characters",
+  "keywords": [
+    "cfg",
+    "config",
+    "configuration",
+    "js",
+    "lean",
+    "nodejs",
+    "pojo",
+    "simple"
+  ],
+  "homepage": "https://github.com/dizzib/leanconf",
+  "bugs": "https://github.com/dizzib/leanconf/issues",
   "license": "MIT",
   "author": "dizzib",
-  "bin": "./bin/lm-parse",
+  "bin": "./bin/leanconf",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dizzib/lm-parse"
+    "url": "https://github.com/dizzib/leanconf"
   },
   "scripts": {
     "start": "./task/bootstrap && node ./_build/task/repl",

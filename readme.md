@@ -1,97 +1,79 @@
-## xawt - X11 active window trigger
-[![Build Status](https://travis-ci.org/dizzib/xawt.svg?branch=master)](https://travis-ci.org/dizzib/xawt)
+# leanconf
 
-* run shell commands when a window receives or loses focus
-* optional delay
+Specify configuration using just 2 markup characters:
 
-Use it to prevent idling background applications from surreptitiously
-stealing your cpu cycles.
+* the key/value separator `:`
+* the comment character `#`
 
-## install globally and run
+Indented whitespace controls nesting and everything parses to a string.
 
-With [node.js] installed on the target [X11] box:
+# example
 
-    $ npm install -g xawt            # might need to prefix with sudo
-    $ xawt
+    # shop.conf
+    name: dizzib's corner shop
 
-You should see `echo` commands run whenever the window focus changes.
+    patrons:
+      alice:
+        cash: 5.00
+      bob:
+        credit: 10.00
 
-## configure
+    fruits          # omit key/val separator to parse immediate children to an array
+      apples
+        Braeburn
+        Cox's       # omit key/val separator to parse childless to a string
+        Royal Gala
+      banana
+      orange:
+        price: 0.10
 
-On its first run xawt copies the [default configuration file] to
-`$XDG_CONFIG_HOME/xawt.yml` which [defaults to][$XDG_CONFIG_HOME] `$HOME/.config/xawt.yml`.
-Edit this [yaml] file with one or more rules:
+[node.js] code:
 
-    /regex/:
-      in: action
-      out: action
+```javascript
+var conf = require('fs').readFileSync('shop.conf', {encoding:'utf8'});
+var obj = require('leanconf').parse(conf);
+console.log(require('util').inspect(obj, {depth:null}));
+```
 
-* `regex` :
-  a unique [JavaScript regular expression]
-* `in:` :
-  (optional) action to perform when regex matches the title of a window receiving focus (activating).
-* `out:` :
-  (optional) action to perform when regex matches the title of a window losing focus (de-activating).
-* `action` :
-  either the shell command to run immediately, or `{delay: dly, command: cmd}`
-  to run cmd after dly seconds unless the window's focus subsequently changes
-  before cmd has run.
+output:
 
-Commands can include [parenthesised substring matches] by the `$` symbol where
-`$1` is the first submatch, `$2` the second, etc.
+    { name: 'dizzib\'s corner shop',
+      patrons: { alice: { cash: '5.00' }, bob: { credit: '10.00' } },
+      fruits:
+       [ { apples: [ 'Braeburn', 'Cox\'s', 'Royal Gala' ] },
+         'banana',
+         { orange: { price: '0.10' } } ] }
 
-    # xawt.yml configuration example
 
-    # freeze Firefox unless it has the focus
-    /- (Mozilla Firefox|Vimperator)$/:
-      in: pkill -SIGCONT firefox
-      out: pkill -SIGSTOP firefox
+# methods
 
-    # unpause any virtualbox guest immediately on gaining focus
-    /^(\w+) \[Paused\] - Oracle VM VirtualBox$/:
-      in: vboxmanage controlvm $1 resume
+```javascript
+var leanconf = require('leanconf');
+```
 
-    # unconditionally pause virtualbox guest 30 seconds after losing focus
-    /^(HERBERT|SANDPIT) \[Running\] - Oracle VM VirtualBox$/:
-      out:
-        command: vboxmanage controlvm $1 pause
-        delay: 30
+## var obj = leanconf.parse(conf, opts)
 
-    # pause virtualbox guest 60 seconds after losing focus unless vlc is running
-    /^(SWEEP) \[Running\] - Oracle VM VirtualBox$/:
-      out:
-        command: (! vboxmanage guestcontrol $1 exec --wait-stdout --image /bin/pgrep -- vlc) && vboxmanage controlvm $1 pause
-        delay: 60
+Parse configuration string `conf` returning object `obj`.
 
-## options
+Set `opts.asArray` to return top-level items in an array (default is `false`).
 
-    $ xawt --help
-    Usage: xawt [Options]
+Set `opts.comment` to change the comment character (default is `#`).
 
-    Options:
+# install
 
-      -h, --help                output usage information
-      -V, --version             output the version number
-      -c, --config-path [path]  path to configuration file (default:~/.config/xawt.yml)
-      -d, --dry-run             trace commands without executing
-      -v, --verbose             emit detailed trace for debugging
+    $ npm install leanconf
 
-## developer build and run
+# developer build and run
 
-    $ git clone --branch=dev https://github.com/dizzib/xawt.git
-    $ cd xawt
+    $ git clone --branch=dev https://github.com/dizzib/leanconf.git
+    $ cd leanconf
     $ npm install     # install dependencies
     $ npm test        # build all and run tests
-    $ npm start       # start the task runner and dry-run xawt
+    $ npm start       # start the task runner
 
-## license
+# license
 
 [MIT](./LICENSE)
 
-[$XDG_CONFIG_HOME]: http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
-[default configuration file]: ./app/default-config.yml
 [node.js]: http://nodejs.org
-[parenthesised substring matches]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Using_parenthesized_substring_matches
-[JavaScript regular expression]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
-[X11]: https://en.wikipedia.org/wiki/X_Window_System
-[yaml]: https://en.wikipedia.org/wiki/YAML
+[npm]: https://npmjs.org
