@@ -44,18 +44,15 @@ describe 'comments' ->
 describe 'real world' ->
   test 'xawt'      -> run '# conf\n/(.*)/:\n  in: echo $1\n' '/(.*)/': in:'echo $1'
   test 'markfound' -> run 'names\n  *.md\n  *.markdown' names:<[ *.md *.markdown ]>
-  test 'shop.conf' ->
-    actual = T(require \fs .readFileSync "#__dirname/shop.conf")
-    #console.log (require \util .inspect) actual, depth:null
-    deq actual, do
-      name: "dizzib's corner shop"
-      patrons:
-        alice:
-          cash: '5.00'
-        bob:
-          credit: '10.00'
-      fruits:
-        apples: ['Braeburn' "Cox's" 'Royal Gala']
-        'banana'
-        orange:
-          price: '0.10'
+  test 'shop.conf' -> deq T(require \fs .readFileSync "#__dirname/shop.conf"), do
+    name: "dizzib's corner shop"
+    patrons:
+      alice:
+        cash: '5.00'
+      bob:
+        credit: '10.00'
+    fruits:
+      apples: ['Braeburn' "Cox's" 'Royal Gala']
+      'banana'
+      orange:
+        price: '0.10'
