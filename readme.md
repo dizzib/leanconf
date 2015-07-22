@@ -5,7 +5,7 @@ Specify configuration using just 2 markup characters:
 * the key/value separator `:`
 * the comment character `#`
 
-Indented whitespace controls nesting and everything parses to a string.
+Indented whitespace controls nesting and values are parsed to strings.
 
 # example
 
