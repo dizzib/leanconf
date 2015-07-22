@@ -10,9 +10,9 @@ function run conf, expect, opts then deq (T conf, opts), expect
 describe 'error' ->
   function run conf, expect, opts then A.throws (-> T conf, opts), expect
   test 'not string'  -> run 123 'conf must be a string'
-  test 'bad indent'  -> run ' a:b' 'Unexpected indent at line 1:  a:b'
-  test 'bad outdent' -> run 'a\n  b\n c' 'Unexpected outdent at line 3:  c'
-  test 'bad string'  -> run 'a:\n b\n c' 'Unexpected string at line 3: c'
+  test 'bad indent'  -> run ' a:b' "Unexpected indent at line 1:' a:b'"
+  test 'bad outdent' -> run 'a\n  b\n c' "Unexpected outdent at line 3:' c'"
+  test 'bad string'  -> run 'a:\n b\n c' "Unexpected string at line 3:'c'"
 
 describe 'empty' ->
   test '{} 1' -> run '' {}

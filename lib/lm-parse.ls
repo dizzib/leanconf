@@ -14,7 +14,7 @@ function parse offset, lines, opts
     if typeof res is \string then err \string v else res := v
   function get-indent line then /^(\s*)/.exec line .0.length
   function strip-comment line then opts.rx.comment.exec line .0
-  function err what, x then throw new Error "Unexpected #what at line #{i + offset}: #x"
+  function err what, x then throw new Error "Unexpected #what at line #{i + offset}:'#x'"
 
   while ++i < lines.length
     err \indent li unless 0 is get-indent li = strip-comment lines[i]
