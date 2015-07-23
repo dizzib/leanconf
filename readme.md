@@ -1,8 +1,7 @@
 # leanconf
 [![Build Status](https://travis-ci.org/dizzib/leanconf.svg?branch=master)](https://travis-ci.org/dizzib/leanconf)
 
-Configuration without the brackets, quotes or escaping,
-using just 2 markup characters:
+Configuration without the brackets, quotes or escaping, using just 2 markup characters:
 
 * the key/value separator `:`
 * the comment character `#`
@@ -12,7 +11,7 @@ Indented whitespace controls nesting and primitive [data types] are [inferred](#
 # example
 
     # shop.conf
-    name: dizzib's corner shop
+    name: dizzib's corner shop: Leeds, Yorkshire
 
     patrons:
       alice:
@@ -23,7 +22,7 @@ Indented whitespace controls nesting and primitive [data types] are [inferred](#
     fruits          # omit key/val separator to parse immediate children to an array
       apples
         Braeburn
-        Cox's       # omit key/val separator to parse childless to a string
+        Cox's       # omit key/val separator to parse as a value
         Royal Gala
       banana
       orange:
@@ -41,7 +40,7 @@ console.log(require('util').inspect(obj, {depth:null}));
 output:
 
 ```javascript
-{ name: 'dizzib\'s corner shop',
+{ name: 'dizzib\'s corner shop: Leeds, Yorkshire',
   patrons: { alice: { cash: 5.03 }, bob: { credit: 10 } },
   fruits:
    [ { apples: [ 'Braeburn', 'Cox\'s', 'Royal Gala' ] },
@@ -67,7 +66,8 @@ Keys or values cannot contain this character.
 ## <a name="value-parser"></a> var val = leanconf.value-parser(raw)
 
 This function parses a raw value-string to the most appropriate [data type] of
-boolean, floating-point number, integer, null or string. Replace or extend as required.
+boolean, floating-point number, integer, null or string.
+Don't call this directly, rather replace or wrap it as required.
 
 # install
 

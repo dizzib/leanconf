@@ -27,17 +27,19 @@ function parse offset, lines, opts
 
   while ++i < lines.length
     err \indent li unless 0 is get-indent li = strip-comment lines[i]
-    is-sep = (sepidx = li.indexOf \:) > -1
-    is-subconf = get-indent lines[1 + i]
-    k = (if is-sep then li.substr 0 sepidx else if is-subconf then li else '').trim!
-    err 'empty key' '' if is-sep and not (k = if k.length then k else void)
-    vraw = if is-sep then li.substr 1 + sepidx else if is-subconf then '' else li
-    v = me.valueParser vraw
-    unless is-subconf then append v, k else
+    if is-followed-by-nested-subconf = get-indent lines[1 + i]
+      is-sep = (li .= trim!)[* - 1] is \:
+      k = if is-sep then li.substr 0, li.length - 1 else li
+      err 'empty key' li if not (k = if k.length then k else void)
       sublines = []; suboffset = offset + i + 1
       while i++ < lines.length and get-indent li = lines[i]
         err \outdent li if li.substr 0 (subind ?= get-indent li) .trim!length
         sublines.push li.substr subind
       append (parse suboffset, sublines, opts with asArray:not is-sep), k
       i--
+    else # flat k:v or v
+      is-sep = (sepidx = li.indexOf \:) > -1
+      k = if is-sep then li.substr(0 sepidx).trim! else ''
+      err 'empty key' li if is-sep and not (k = if k.length then k else void)
+      append (me.valueParser if is-sep then li.substr 1 + sepidx else li), k
   res
