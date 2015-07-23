@@ -13,8 +13,7 @@ module.exports = me =
     str
 
 function parse offset, lines, opts
-  i = -1; res = if opts.asArray then [] else {}
-  sep = opts.sep; seplen = sep.length
+  i = -1; sep = opts.sep; seplen = sep.length; res = if opts.asArray then [] else {}
 
   function append v, k
     if opts.asArray and k then return res.push "#k":v
