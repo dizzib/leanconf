@@ -13,7 +13,6 @@ module.exports = me =
     str
 
 function parse offset, lines, opts
-  return void unless lines.length
   i = -1; res = if opts.asArray then [] else {}
   sep = opts.sep; seplen = sep.length
 
@@ -38,7 +37,7 @@ function parse offset, lines, opts
         sublines.push li.slice subind
       append (parse suboffset, sublines, opts with asArray:not is-sep), k
       i--
-    else # flat k:v or v
+    else # k:v or v
       is-sep = (sepidx = li.indexOf sep) > -1
       k = if is-sep then li.slice(0 sepidx).trim! else ''
       err 'empty key' li if is-sep and not (k = if k.length then k else void)
