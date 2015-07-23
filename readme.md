@@ -63,6 +63,8 @@ Set `opts.asArray` to return top-level items in an array (default is `false`).
 Set `opts.comment` to change the comment character (default is `#`).
 Keys or values cannot contain this character.
 
+Set `opts.sep` to change the key/value separator (default is `:`).
+
 ## <a name="value-parser"></a> var val = leanconf.value-parser(raw)
 
 This function parses a raw value-string to the most appropriate [data type] of

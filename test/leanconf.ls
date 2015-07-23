@@ -44,6 +44,7 @@ describe 'separator' ->
   test 'in key 1' -> run 'a:b\n c' 'a:b':[\c]
   test 'in key 2' -> run 'a:b:\n c' 'a:b':\c
   test 'in value' -> run 'a:b:c:d' a:'b:c:d'
+  test ':='       -> run 'a\n b:=\n  c:=d\n e:f=g' {a:[b:{c:\d}, 'e:f=g']} sep:\:=
 
 describe 'type inference' ->
   test 'bool'   -> run 'true\nfalse' [true false] ARRAY
