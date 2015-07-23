@@ -1,12 +1,13 @@
 # leanconf
 [![Build Status](https://travis-ci.org/dizzib/leanconf.svg?branch=master)](https://travis-ci.org/dizzib/leanconf)
 
-Specify configuration using just 2 markup characters:
+Configuration without the brackets, quotes or escaping,
+using just 2 markup characters:
 
 * the key/value separator `:`
 * the comment character `#`
 
-Indented whitespace controls nesting and values are parsed to strings.
+Indented whitespace controls nesting and primitive [data types] are [inferred](#value-parser).
 
 # example
 
@@ -15,7 +16,7 @@ Indented whitespace controls nesting and values are parsed to strings.
 
     patrons:
       alice:
-        cash: 5.00
+        cash: 5.03
       bob:
         credit: 10.00
 
@@ -26,7 +27,8 @@ Indented whitespace controls nesting and values are parsed to strings.
         Royal Gala
       banana
       orange:
-        price: 0.10
+        special: true
+        stock: 17
 
 [node.js] code:
 
@@ -40,11 +42,11 @@ output:
 
 ```javascript
 { name: 'dizzib\'s corner shop',
-  patrons: { alice: { cash: '5.00' }, bob: { credit: '10.00' } },
+  patrons: { alice: { cash: 5.03 }, bob: { credit: 10 } },
   fruits:
    [ { apples: [ 'Braeburn', 'Cox\'s', 'Royal Gala' ] },
      'banana',
-     { orange: { price: '0.10' } } ] }
+     { orange: { special: true, stock: 17 } } ] }
 ```
 
 # methods
@@ -60,6 +62,12 @@ Parse configuration string `conf` returning object `obj`.
 Set `opts.asArray` to return top-level items in an array (default is `false`).
 
 Set `opts.comment` to change the comment character (default is `#`).
+Keys or values cannot contain this character.
+
+## <a name="value-parser"></a> var val = leanconf.value-parser(raw)
+
+This function parses a raw value-string to the most appropriate [data type] of
+boolean, floating-point number, integer, null or string. Replace or extend as required.
 
 # install
 
@@ -77,5 +85,7 @@ Set `opts.comment` to change the comment character (default is `#`).
 
 [MIT](./LICENSE)
 
+[data type]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures
+[data types]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures
 [node.js]: http://nodejs.org
 [npm]: https://npmjs.org

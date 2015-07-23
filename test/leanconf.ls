@@ -20,7 +20,6 @@ describe 'empty' ->
   test '{} 2' -> run '\n\n' {}
   test '[] 1' -> run '' [] ARRAY
   test '[] 2' -> run '\n\n' [] ARRAY
-  test 'void' -> run 'a:\nb : ' a:void b:void
 
 describe 'flat' ->
   test 'string' -> run 'foo' 'foo'
@@ -41,6 +40,13 @@ describe 'comments' ->
   test '#' -> run '# a comment\nfoo # bar baz\n#foo#bar' 'foo'
   test ';' -> run '; a comment\nfoo ; bar baz\n;foo;bar' 'foo' comment:\;
 
+describe 'type inference' ->
+  test 'bool'   -> run 'true\nfalse' [true false] ARRAY
+  test 'float'  -> run '0.123\n5432.1' [0.123 5432.1] ARRAY
+  test 'int'    -> run '1\n54321' [1 54321] ARRAY
+  test 'null'   -> run 'a:\nb : ' a:null b:null
+  test 'string' -> run '\nTrue\nFalse\nnot true\n1 2\n.3\n4.' [\True \False 'not true' '1 2' \.3 \4.] ARRAY
+
 describe 'real world' ->
   test 'xawt'      -> run '# conf\n/(.*)/:\n  in: echo $1\n' '/(.*)/': in:'echo $1'
   test 'markfound' -> run 'names\n  *.md\n  *.markdown' names:<[ *.md *.markdown ]>
@@ -48,11 +54,12 @@ describe 'real world' ->
     name: "dizzib's corner shop"
     patrons:
       alice:
-        cash: '5.00'
+        cash: 5.03
       bob:
-        credit: '10.00'
+        credit: -10.00
     fruits:
       apples: ['Braeburn' "Cox's" 'Royal Gala']
       'banana'
       orange:
-        price: '0.10'
+        special: true
+        stock: 17

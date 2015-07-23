@@ -1,5 +1,5 @@
 name       : \leanconf
-version    : \0.1.0
+version    : \0.2.0
 description: "Specify configuration using just 2 markup characters"
 keywords   : <[ cfg config configuration js lean nodejs pojo simple ]>
 homepage   : \https://github.com/dizzib/leanconf
