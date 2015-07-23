@@ -1,7 +1,7 @@
 # leanconf
 [![Build Status](https://travis-ci.org/dizzib/leanconf.svg?branch=master)](https://travis-ci.org/dizzib/leanconf)
 
-Configuration without the brackets, quotes or escaping, using just 2 markup characters:
+Configuration without brackets, quotes or escaping, using just 2 markup characters:
 
 * the key/value separator `:`
 * the comment character `#`
@@ -69,7 +69,8 @@ Set `opts.sep` to change the key/value separator (default is `:`).
 
 This function parses a raw value-string to the most appropriate [data type] of
 boolean, floating-point number, integer, null or string.
-Don't call this directly, rather replace or wrap it as required.
+Don't call this directly, rather replace or wrap it if you want to alter
+the default behaviour.
 
 # install
 
