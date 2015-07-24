@@ -1,5 +1,6 @@
 # leanconf
-[![Build Status](https://travis-ci.org/dizzib/leanconf.svg?branch=master)](https://travis-ci.org/dizzib/leanconf)
+[![npm version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
 
 Configuration without brackets, quotes or escaping, using just 2 markup characters:
 
@@ -92,3 +93,7 @@ the default behaviour.
 [data types]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures
 [node.js]: http://nodejs.org
 [npm]: https://npmjs.org
+[npm-image]: https://img.shields.io/npm/v/leanconf.svg
+[npm-url]: https://npmjs.org/package/leanconf
+[travis-image]: https://travis-ci.org/dizzib/leanconf.svg?branch=master
+[travis-url]: https://travis-ci.org/dizzib/leanconf
