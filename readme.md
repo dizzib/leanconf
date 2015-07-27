@@ -9,7 +9,7 @@ Configuration without brackets, quotes or escaping, using just 2 markup characte
 
 Indented whitespace controls nesting and primitive [data types] are [inferred](#value-parser).
 
-# example
+## example
 
     # shop.conf
     name: dizzib's corner shop: Leeds, Yorkshire
@@ -49,13 +49,13 @@ output:
      { orange: { special: true, stock: 17 } } ] }
 ```
 
-# methods
+## methods
 
 ```javascript
 var leanconf = require('leanconf');
 ```
 
-## var obj = leanconf.parse(conf, opts)
+### var obj = leanconf.parse(conf, opts)
 
 Parse configuration string `conf` returning object `obj`.
 
@@ -63,21 +63,20 @@ Set `opts.asArray` to return top-level items in an array (default is `false`).
 
 Set `opts.comment` to change the comment character (default is `#`).
 Keys or values cannot contain this character.
-
 Set `opts.sep` to change the key/value separator (default is `:`).
 
-## <a name="value-parser"></a> var val = leanconf.value-parser(raw)
+### <a name="value-parser"></a> var val = leanconf.value-parser(raw)
 
 This function parses a raw value-string to the most appropriate [data type] of
 boolean, floating-point number, integer, null or string.
 Don't call this directly, rather replace or wrap it if you want to alter
 the default behaviour.
 
-# install
+## install
 
     $ npm install leanconf
 
-# developer build and run
+## developer build and run
 
     $ git clone --branch=dev https://github.com/dizzib/leanconf.git
     $ cd leanconf
@@ -85,7 +84,7 @@ the default behaviour.
     $ npm test        # build all and run tests
     $ npm start       # start the task runner
 
-# license
+## license
 
 [MIT](./LICENSE)
 
