@@ -1,5 +1,5 @@
 name       : \leanconf
-version    : \0.2.0
+version    : \0.2.1
 description: "Configuration without brackets, quotes or escaping, using just 2 markup characters"
 keywords   : <[ clean config configuration indent indented js lean nodejs pojo pure simple whitespace ]>
 homepage   : \https://github.com/dizzib/leanconf
