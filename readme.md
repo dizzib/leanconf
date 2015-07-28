@@ -1,5 +1,4 @@
 # leanconf
-[![npm version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 
 Configuration without brackets, quotes or escaping, using just 2 markup characters:
